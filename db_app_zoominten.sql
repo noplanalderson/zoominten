@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 27, 2021 at 09:37 PM
+-- Generation Time: Feb 28, 2021 at 04:14 PM
 -- Server version: 10.3.25-MariaDB-0ubuntu0.20.04.1
 -- PHP Version: 7.4.15
 
@@ -57,7 +57,7 @@ CREATE TABLE `tb_app_setting` (
 --
 
 INSERT INTO `tb_app_setting` (`app_id`, `app_title`, `app_title_alt`, `fetch_data_time`, `footer_text`, `app_icon`, `app_logo_dark`, `app_logo_light`, `company_name`) VALUES
-(1, 'Zoom Meeting Information and Teleconference Management', 'ZOOMINTEN', 120000, 'ZOOMINTEN - DISKOMINFO KOTA TANGERANG', 'app_icon/simonster-icon_PezWKXCz8oBwHy9LprsY7g_BOoCYvzs_6984_439082561_LauOSR_1613634369.webp', 'app_logo_dark/logo-simonster-dark_AlQs4ThOtYeh0ywFJJVBrg_MJoRwmcE_7946_460893215_TrwlbL_1613634369.webp', 'app_logo_light/logo-simonster-light_DRJnMoUxcU0AKp98NeYm1Q_sKFeDaYx_8462_508413269_6E5MUK_1613634369.webp', 'DINAS KOMUNIKASI DAN INFORMATIKA KOTA TANGERANG');
+(1, 'Zoom Meeting Information And Teleconference Management', 'ZOOMINTEN', 120000, 'ZOOMINTEN - DISKOMINFO KOTA TANGERANG', 'app_icon/zoominten-icon_F7iZOgfoVUtQ3jO8ouQtUg_JxmfWdly_8513_236790184_uwMR2V_1614502585.webp', 'app_logo_dark/6a246040-941b-44a4-b96d-ca074d2de6cb_200x200_8xohz27ymI1OQdpxqjOYA_cOeRqjtI_6521_058749316_5qXbok_1614503267.webp', 'app_logo_light/6b542572-ec8a-48b5-9655-6dd7005357a7_200x200_M3vG00XURt46VJ3qJCcSg_UWEnvRbN_7286_093581246_zaj0In_1614503094.webp', 'DINAS KOMUNIKASI DAN INFORMATIKA KOTA TANGERANG');
 
 -- --------------------------------------------------------
 
