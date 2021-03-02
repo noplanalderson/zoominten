@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * iCalEasyReader is an easy to understood class, loads a "ics" format string and returns an array with the traditional iCal fields
@@ -29,7 +30,7 @@ class iCalEasyReader
         $last = count( $lines );
         for($i = 0; $i < $last; $i ++)
         {
-            if (trim( $lines[$i] ) == '')
+            if (trim( $lines[$i] ) == '' && array_key_exists($lines[$i], $lines))
                 unset( $lines[$i] );
         }
         $lines = array_values( $lines );
@@ -38,16 +39,16 @@ class iCalEasyReader
         $first = 0;
         $last = count( $lines ) - 1;
 
-        if (! ( mb_ereg_match( '^BEGIN:VCALENDAR', $lines[$first], $regex_opt ) and mb_ereg_match( '^END:VCALENDAR', $lines[$last], $regex_opt ) ))
+        if (! ( mb_ereg_match( '^BEGIN:VEVENT', $lines[$first], $regex_opt ) and mb_ereg_match( '^BEGIN:VALARM', $lines[$last], $regex_opt ) ))
         {
             $first = null;
             $last = null;
             foreach ( $lines as $i => &$line )
             {
-                if (mb_ereg_match( '^BEGIN:VCALENDAR', $line, $regex_opt ))
+                if (mb_ereg_match( '^BEGIN:VEVENT', $line, $regex_opt ))
                     $first = $i;
 
-                if (mb_ereg_match( '^END:VCALENDAR', $line, $regex_opt ))
+                if (mb_ereg_match( '^BEGIN:VALARM', $line, $regex_opt ))
                 {
                     $last = $i;
                     break;
@@ -229,5 +230,49 @@ class iCalEasyReader
             $string = mb_eregi_replace( $pattern, $replacement, $string );
 
         return $string;
+    }
+
+
+    /**
+     * Custom Method for Rendering Selected ICS index into array
+     * Create by Noplan Alderson 2nd March 2021 09:38 PM
+     * 
+    */
+    public function render()
+    {
+        $items = [];
+
+        foreach ($this->ical as $key => $value) {
+
+            $check_key = explode(';', $key);
+            
+            if( count($check_key) > 1)
+            {
+                $items[$check_key[0]] = ($check_key[0] == 'DTSTART' || $check_key[0] == 'DTEND') ? strtotime($value) : $value;
+                $items[explode('=', $check_key[1], 2)[0]] = explode('=', $check_key[1], 2)[1];
+            }
+            else
+            {
+                if($key == 'DESCRIPTION')
+                {
+                    mb_ereg_search_init( $value );
+                    $meeting_id = mb_ereg_search_regs( '^(Meeting ID)\:(.+)$' , NULL );
+                    $meeting_pwd = mb_ereg_search_regs( '^(Passcode)\:(.+)$' , NULL );
+                    $items['MEETING_ID'] = $meeting_id[2];
+                    $items['MEETING_PWD'] = $meeting_pwd[2];
+                }
+
+                $items[$key] = $value;
+            }
+
+            unset($items['DESCRIPTION']);
+        }
+
+        $start = new DateTime(date('Ymdhis', $items['DTSTART']));
+        $end = new DateTime(date('Ymdhis', $items['DTEND']));
+        $duration = $start->diff($end);
+        $items['DURATION'] = $duration->h . ' hour(s) ' . $duration->i . ' minute(s)';
+
+        return $items;
     }
 } 
