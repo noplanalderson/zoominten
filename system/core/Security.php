@@ -1074,7 +1074,7 @@ class CI_Security {
 			// each page load since a page could contain embedded
 			// sub-pages causing this feature to fail
 			if (isset($_COOKIE[$this->_csrf_cookie_name]) && is_string($_COOKIE[$this->_csrf_cookie_name])
-				&& preg_match('%^[a-zA-Z0-9/+_]*={0,2}$%', $_COOKIE[$this->_csrf_cookie_name]) === 1)
+				&& preg_match('%^[a-zA-Z0-9\/+_]*={0,2}$%', $_COOKIE[$this->_csrf_cookie_name]) === 1)
 			{
 				return $this->_csrf_hash = $_COOKIE[$this->_csrf_cookie_name];
 			}
